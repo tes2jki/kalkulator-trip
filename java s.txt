@@ -1,0 +1,40 @@
+function calculateTotal() {
+    // Ambil data dari form
+    const destinationPrice = parseInt(document.getElementById("destination").value);
+    const transportSelection = document.getElementById("transport").value;
+    const restaurantPrice = parseInt(document.getElementById("restaurant").value);
+    const hotelPrice = parseInt(document.getElementById("hotel").value);
+    const peopleCount = parseInt(document.getElementById("people").value);
+    const duration = parseInt(document.getElementById("duration").value);
+    
+    // Biaya Tour Guide per pax
+    const tourGuidePricePerPax = 300000 / peopleCount;
+
+    // Hitung biaya per pax
+    let transportPricePerPax = 0;
+    if (transportSelection !== 'charter') {
+        transportPricePerPax = parseInt(transportSelection) / peopleCount;
+    } else {
+        transportPricePerPax = parseInt(transportSelection);  // Charter hanya menghitung transportasi
+    }
+
+    const hotelPricePerPax = hotelPrice / 2;  // Biaya kamar dibagi dua orang
+    const mealPricePerPax = restaurantPrice * 2;  // Makan 2 kali sehari per orang
+
+    // Total biaya per pax
+    let totalPricePerPax = transportPricePerPax + hotelPricePerPax + mealPricePerPax + tourGuidePricePerPax;
+    
+    // Biaya Operasional dan Keuntungan
+    const operationalCost = totalPricePerPax * 0.05;  // 5% biaya operasional
+    const profit = totalPricePerPax * 0.15;  // 15% keuntungan
+    
+    // Total harga per pax dengan biaya operasional dan keuntungan
+    const finalPricePerPax = totalPricePerPax + operationalCost + profit;
+
+    // Total harga untuk semua pax
+    const totalPrice = finalPricePerPax * peopleCount;
+
+    // Tampilkan harga per pax dan total harga
+    document.getElementById("pricePerPax").textContent = "Rp " + finalPricePerPax.toLocaleString();
+    document.getElementById("totalPrice").textContent = "Rp " + totalPrice.toLocaleString();
+}
